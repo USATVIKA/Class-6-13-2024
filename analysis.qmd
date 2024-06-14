@@ -5,16 +5,35 @@ format: html
 execute: 
   echo: false
 ---
-```{r}
-#|message: false
+```{r, message = FALSE}
 #|label: setup
-#|warning: false
 library(tidyverse)
 library(scales)
 ```
 ```{r}
 #|warning: false
-data <- read_csv("mass-tracts.csv")
-data |> drop_na()
+x <- read_csv("mass-tracts.csv", show_col_types = FALSE)
+x |> 
+  drop_na() |> 
+  ggplot(aes(x = med_income, fill = race)) + 
+  geom_density(alpha = 0.5) +
+  labs(
+    title = "Median Income for Massachusetts Census Tracts",
+    subtitle = "The richest tracts are White",
+    x = "Median Income",
+    y = NULL,
+    caption = "The race of each tract is determined by the most numerous racial group\npresent in that tract. Data from the American Community Survey 2022."
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Hispanic" = "red",
+      "Black" = "yellow",
+      "Asian" = "lightblue",
+      "White" = "purple"
+    )
+  ) +
+  theme_minimal() + 
+  scale_x_continuous(labels = scales::dollar_format()) + 
+  theme(axis.text.y = element_blank())
 ```
 
