@@ -1,0 +1,20 @@
+---
+title: "Mass Tracts"
+author: "Satvika Upperla"
+format: html
+execute: 
+  echo: false
+---
+```{r}
+#|message: false
+#|label: setup
+#|warning: false
+library(tidyverse)
+library(scales)
+```
+```{r}
+#|warning: false
+data <- read_csv("mass-tracts.csv")
+data |> drop_na()
+```
+
